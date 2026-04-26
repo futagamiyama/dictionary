@@ -20,6 +20,7 @@ export type Word = {
   part_of_speech: string | null;
   pronunciation: string | null;
   level: number | null;
+  rank: number | null;
   created_at: string;
   examples?: Example[];
 };

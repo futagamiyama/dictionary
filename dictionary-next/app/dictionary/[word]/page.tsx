@@ -42,6 +42,9 @@ export default async function WordPage({ params }: { params: Promise<{ word: str
               {w.level && (
                 <span className="text-xs bg-gray-100 text-gray-500 rounded px-2 py-0.5">Lv.{w.level}</span>
               )}
+              {w.rank && (
+                <span className="text-xs bg-blue-50 text-blue-500 rounded px-2 py-0.5">#{w.rank}</span>
+              )}
             </div>
             {w.pronunciation && (
               <p className="text-gray-400 text-lg mt-1">[{w.pronunciation}]</p>
@@ -69,6 +72,13 @@ export default async function WordPage({ params }: { params: Promise<{ word: str
 
         {/* Right pane */}
         <aside className="w-56 border-l p-6 shrink-0 flex flex-col gap-4 text-sm text-gray-500">
+          {w.rank && (
+            <div>
+              <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">Frequency Rank</p>
+              <p className="text-2xl font-bold text-blue-600">#{w.rank}</p>
+              <p className="text-xs text-gray-400">/ 25,000</p>
+            </div>
+          )}
           {w.level && (
             <div>
               <p className="text-xs text-gray-400 uppercase tracking-wide mb-1">Level</p>

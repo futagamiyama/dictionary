@@ -11,6 +11,15 @@ function extractExamples(formData: FormData): { sentence: string; translation: s
     .filter((r) => r.sentence !== '');
 }
 
+async function lookupRank(word: string): Promise<number | null> {
+  const { data } = await supabase
+    .from('bnc_coca')
+    .select('rank')
+    .ilike('headword', word)
+    .maybeSingle();
+  return data?.rank ?? null;
+}
+
 export async function addWord(formData: FormData) {
   const word = formData.get('word')?.toString().trim();
   const meaning = formData.get('meaning')?.toString().trim();
@@ -22,7 +31,9 @@ export async function addWord(formData: FormData) {
 
   if (!word || !meaning) throw new Error('word と meaning は必須です');
 
-  const { data, error } = await supabase.from('words').insert({ word, meaning, part_of_speech, pronunciation, level }).select('id').single();
+  const rank = await lookupRank(word);
+
+  const { data, error } = await supabase.from('words').insert({ word, meaning, part_of_speech, pronunciation, level, rank }).select('id').single();
   if (error || !data) throw new Error(error?.message ?? 'insert failed');
 
   if (examples.length > 0) {
@@ -45,7 +56,9 @@ export async function updateWord(id: string, formData: FormData) {
 
   if (!word || !meaning) throw new Error('word と meaning は必須です');
 
-  const { error } = await supabase.from('words').update({ word, meaning, part_of_speech, pronunciation, level }).eq('id', id);
+  const rank = await lookupRank(word);
+
+  const { error } = await supabase.from('words').update({ word, meaning, part_of_speech, pronunciation, level, rank }).eq('id', id);
   if (error) throw new Error(error.message);
 
   await supabase.from('examples').delete().eq('word_id', id);
