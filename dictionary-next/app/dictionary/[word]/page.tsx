@@ -25,7 +25,7 @@ export default async function WordPage({ params }: { params: Promise<{ word: str
       <header className="border-b px-6 py-3 flex items-center justify-between gap-4">
         <Link href="/" className="text-sm text-gray-400 hover:text-gray-600 shrink-0">← List</Link>
         <SearchBox />
-        <div className="w-24 shrink-0" />
+        <Link href="/new" className="bg-black text-white text-sm rounded-lg px-4 py-2 hover:bg-gray-800 transition-colors shrink-0">+ Add</Link>
       </header>
 
       {/* Body */}
