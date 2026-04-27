@@ -72,7 +72,7 @@ export default async function Home() {
 
       {/* Footer */}
       <footer className="border-t px-6 py-3 text-xs text-gray-400 text-center">
-        Dictionary App
+        Dictionary App <span className="ml-2">ver 0.01</span>
       </footer>
 
     </div>
