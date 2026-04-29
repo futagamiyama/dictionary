@@ -39,18 +39,23 @@ export default async function WordPage({ params }: { params: Promise<{ word: str
               {w.part_of_speech && (
                 <span className="text-gray-500">{w.part_of_speech}</span>
               )}
-              {w.level && (
-                <span className="text-xs bg-gray-100 text-gray-500 rounded px-2 py-0.5">Lv.{w.level}</span>
-              )}
-              {w.rank && (
-                <span className="text-xs bg-blue-50 text-blue-500 rounded px-2 py-0.5">#{w.rank}</span>
+              {(w.level || w.rank) && (
+                <span className="text-sm text-gray-400">
+                  {w.level && `[lv${w.level}]`}
+                  {w.level && w.rank && ' '}
+                  {w.rank && `(#${w.rank.toLocaleString()} / 25,000)`}
+                </span>
               )}
             </div>
             {w.pronunciation && (
               <p className="text-gray-400 text-lg mt-1">[{w.pronunciation}]</p>
             )}
             <div className="absolute left-0 top-full mt-1 w-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-10">
-              <p className="whitespace-pre-wrap text-sm text-blue-800 bg-blue-50 rounded px-3 py-2">{w.meaning}</p>
+              <ol className="text-sm text-blue-800 bg-blue-50 rounded px-3 py-2 space-y-0.5 list-decimal list-inside">
+                {w.meaning.split('/').map((item, i) => (
+                  <li key={i}>{item.trim()}</li>
+                ))}
+              </ol>
             </div>
           </div>
 

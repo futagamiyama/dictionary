@@ -32,8 +32,14 @@ export default async function Home() {
             <ul>
               {words.map((w) => (
                 <li key={w.id} className="border-b last:border-b-0">
-                  <Link href={`/dictionary/${encodeURIComponent(w.word)}`} className="block px-2 py-2.5 hover:bg-gray-50 text-base font-medium">
-                    {w.word}
+                  <Link href={`/dictionary/${encodeURIComponent(w.word)}`} className="flex items-baseline gap-2 px-2 py-2.5 hover:bg-gray-50">
+                    <span className="text-base font-medium">{w.word}</span>
+                    {w.level && (
+                      <span className="text-xs text-gray-400">[lv{w.level}]</span>
+                    )}
+                    {w.rank && (
+                      <span className="text-xs text-gray-400">(#{w.rank.toLocaleString()} / 25,000)</span>
+                    )}
                   </Link>
                 </li>
               ))}

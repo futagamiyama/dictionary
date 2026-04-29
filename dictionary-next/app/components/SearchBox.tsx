@@ -49,6 +49,7 @@ export default function SearchBox() {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         onFocus={() => results.length > 0 && setOpen(true)}
+        onKeyDown={(e) => { if (e.key === 'Enter' && query.trim()) go(query.trim()); }}
         placeholder="Search words..."
         className="w-full border rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-black"
       />
