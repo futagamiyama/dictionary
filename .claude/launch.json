@@ -1,0 +1,21 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "dictionary-next",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "cwd": "dictionary-next",
+      "port": 3001,
+      "autoPort": true
+    },
+    {
+      "name": "dictionary-next-remote",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev:remote"],
+      "cwd": "dictionary-next",
+      "port": 3001,
+      "autoPort": true
+    }
+  ]
+}

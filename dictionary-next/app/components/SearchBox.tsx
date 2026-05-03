@@ -37,7 +37,7 @@ export default function SearchBox() {
   }, []);
 
   const go = (word: string) => {
-    setQuery('');
+    setQuery(word);
     setOpen(false);
     router.push(`/dictionary/${encodeURIComponent(word)}`);
   };

@@ -11,6 +11,7 @@
     "seed:bnc": "node --env-file=.env.local ../scripts/seed-bnc-coca.mjs"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.92.0",
     "@supabase/ssr": "^0.10.2",
     "@supabase/supabase-js": "^2.103.3",
     "next": "16.2.4",

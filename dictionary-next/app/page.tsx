@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { supabase, Word } from '@/lib/supabase';
-import SearchBox from '@/app/components/SearchBox';
+import { Header } from '@/app/components/Header';
 
 async function getWords(): Promise<Word[]> {
   const { data, error } = await supabase.from('words').select('*').order('word');
@@ -15,11 +15,7 @@ export default async function Home() {
     <div className="min-h-screen flex flex-col">
 
       {/* Header */}
-      <header className="border-b px-6 py-3 flex items-center justify-between gap-4">
-        <h1 className="text-xl font-bold shrink-0">Dictionary</h1>
-        <SearchBox />
-        <Link href="/new" className="bg-black text-white text-sm rounded-lg px-4 py-2 hover:bg-gray-800 transition-colors shrink-0">+ Add</Link>
-      </header>
+      <Header />
 
       {/* Body */}
       <div className="flex flex-1 overflow-hidden">

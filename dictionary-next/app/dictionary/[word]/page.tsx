@@ -2,7 +2,7 @@ import { supabase, Word } from '@/lib/supabase';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import DeleteButton from './DeleteButton';
-import SearchBox from '@/app/components/SearchBox';
+import { Header } from '@/app/components/Header';
 
 async function getWord(word: string): Promise<Word> {
   const { data, error } = await supabase
@@ -22,11 +22,7 @@ export default async function WordPage({ params }: { params: Promise<{ word: str
     <div className="min-h-screen flex flex-col">
 
       {/* Header */}
-      <header className="border-b px-6 py-3 flex items-center justify-between gap-4">
-        <Link href="/" className="text-sm text-gray-400 hover:text-gray-600 shrink-0">← List</Link>
-        <SearchBox />
-        <Link href="/new" className="bg-black text-white text-sm rounded-lg px-4 py-2 hover:bg-gray-800 transition-colors shrink-0">+ Add</Link>
-      </header>
+      <Header />
 
       {/* Body */}
       <div className="flex flex-1 overflow-hidden">
