@@ -1,20 +1,42 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 
 type Result = { word: string; pronunciation: string | null };
 
+function wordFromPathname(pathname: string): string {
+  const m = pathname.match(/^\/dictionary\/(.+)$/);
+  if (!m) return '';
+  try {
+    return decodeURIComponent(m[1]);
+  } catch {
+    return m[1];
+  }
+}
+
 export default function SearchBox() {
-  const [query, setQuery] = useState('');
+  const pathname = usePathname();
+  const [query, setQuery] = useState(() => wordFromPathname(pathname));
   const [results, setResults] = useState<Result[]>([]);
   const [open, setOpen] = useState(false);
+  const lastConfirmed = useRef<string>(wordFromPathname(pathname));
   const router = useRouter();
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const word = wordFromPathname(pathname);
+    if (word) {
+      setQuery(word);
+      lastConfirmed.current = word;
+      setOpen(false);
+    }
+  }, [pathname]);
+
+  useEffect(() => {
     if (!query.trim()) { setResults([]); return; }
+    if (query === lastConfirmed.current) { setResults([]); return; }
     const timer = setTimeout(async () => {
       const { data } = await supabase
         .from('words')
@@ -37,7 +59,9 @@ export default function SearchBox() {
   }, []);
 
   const go = (word: string) => {
+    lastConfirmed.current = word;
     setQuery(word);
+    setResults([]);
     setOpen(false);
     router.push(`/dictionary/${encodeURIComponent(word)}`);
   };
